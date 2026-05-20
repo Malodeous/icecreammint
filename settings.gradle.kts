@@ -1,4 +1,4 @@
-rootProject.name = "Flute"
+rootProject.name = "icecreammint"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

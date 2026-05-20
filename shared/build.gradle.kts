@@ -11,7 +11,7 @@ plugins {
 kotlin {
     jvmToolchain(17)
     android {
-        namespace = "xyz.malefic.flute.shared"
+        namespace = "xyz.malefic.icecreammint.shared"
         compileSdk = 37
         minSdk = 24
 

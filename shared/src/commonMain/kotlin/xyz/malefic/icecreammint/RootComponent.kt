@@ -1,4 +1,4 @@
-package xyz.malefic.flute
+package xyz.malefic.icecreammint
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arkivanov.decompose.ComponentContext

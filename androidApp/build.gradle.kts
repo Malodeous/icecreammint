@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "xyz.malefic.flute"
+    namespace = "xyz.malefic.icecreammint"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "xyz.malefic.flute"
+        applicationId = "xyz.malefic.icecreammint"
         minSdk = 24
         targetSdk = 37
         versionCode =

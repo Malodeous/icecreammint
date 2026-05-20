@@ -1,4 +1,4 @@
-package xyz.malefic.flute.screens
+package xyz.malefic.icecreammint.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

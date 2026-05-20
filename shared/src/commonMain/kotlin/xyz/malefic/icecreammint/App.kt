@@ -1,4 +1,4 @@
-package xyz.malefic.flute
+package xyz.malefic.icecreammint
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -19,8 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import xyz.malefic.flute.screens.DemoScreen
-import xyz.malefic.flute.screens.EmptyScreenContent
+import xyz.malefic.icecreammint.screens.DemoScreen
+import xyz.malefic.icecreammint.screens.EmptyScreenContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

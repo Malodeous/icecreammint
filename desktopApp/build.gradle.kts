@@ -24,7 +24,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "xyz.malefic.flute.MainKt"
+        mainClass = "xyz.malefic.icecreammint.MainKt"
         nativeDistributions {
             targetFormats(
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
@@ -35,7 +35,7 @@ compose.desktop {
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Rpm,
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.AppImage
             )
-            packageName = "Flute"
+            packageName = "IceCreamMint"
             packageVersion = providers.gradleProperty("packageVersion")
                 .orElse("1.0.0")
                 .get()

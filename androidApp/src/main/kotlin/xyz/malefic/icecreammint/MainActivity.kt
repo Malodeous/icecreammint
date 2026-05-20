@@ -1,4 +1,4 @@
-package xyz.malefic.flute
+package xyz.malefic.icecreammint
 
 import android.os.Build
 import android.os.Bundle

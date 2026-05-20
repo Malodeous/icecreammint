@@ -1,4 +1,4 @@
-package xyz.malefic.flute
+package xyz.malefic.icecreammint
 
 import androidx.compose.runtime.remember
 import androidx.compose.ui.window.ComposeUIViewController
