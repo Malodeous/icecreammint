@@ -1,0 +1,76 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+kotlin {
+    jvmToolchain(17)
+    android {
+        namespace = "xyz.malefic.flute.shared"
+        compileSdk = 37
+        minSdk = 24
+
+        androidResources {
+            enable = true
+        }
+
+        withJava()
+        withHostTestBuilder {}.configure {}
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+
+        packaging {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            }
+        }
+    }
+
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "shared"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
+        val jvmMain by getting
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+        commonMain.dependencies {
+            implementation(libs.bundles.compose)
+
+            implementation(libs.souza.octicons)
+
+            implementation(libs.decompose)
+            implementation(libs.decompose.extensions.compose)
+        }
+    }
+}
+
+dependencies {
+    androidRuntimeClasspath(libs.compose.ui.tooling)
+}

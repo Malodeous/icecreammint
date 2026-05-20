@@ -1,0 +1,243 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: false
+        default: 'none'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - none
+
+permissions:
+  contents: write
+
+jobs:
+  calculate-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.calc.outputs.version }}
+      base_version: ${{ steps.calc.outputs.base_version }}
+      version_code: ${{ steps.calc.outputs.version_code }}
+      is_prerelease: ${{ steps.calc.outputs.is_prerelease }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - id: calc
+        run: |
+          # Prefer the latest non-zero semver tag; otherwise start from v1.0.0.
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[1-9][0-9]*\.[0-9]+\.[0-9]+(-.*)?$' | head -n1 || true)
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v1.0.0"
+          fi
+          echo "Latest tag: $LATEST_TAG"
+
+          # Remove 'v' prefix
+          VERSION=${LATEST_TAG#v}
+          # Handle cases where version might have suffixes (like -dev.1)
+          BASE_VERSION=$(echo "$VERSION" | cut -d'-' -f1)
+
+          # Fall back to 1.0.0 if the tag is not plain MAJOR.MINOR.PATCH
+          if ! [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            BASE_VERSION="1.0.0"
+          fi
+
+          # Split into parts and enforce MAJOR >= 1
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE_VERSION"
+          if [ "$MAJOR" -lt 1 ]; then
+            MAJOR=1
+            MINOR=0
+            PATCH=0
+          fi
+
+          BUMP="${{ github.event.inputs.version_bump }}"
+          if [ "${{ github.event_name }}" == "push" ]; then
+            BUMP="none"
+          fi
+
+          if [ "$BUMP" == "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP" == "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          elif [ "$BUMP" == "patch" ]; then
+            PATCH=$((PATCH + 1))
+          fi
+
+          BASE_VERSION="$MAJOR.$MINOR.$PATCH"
+          NEW_VERSION="$BASE_VERSION"
+
+          if [ "$BUMP" == "none" ] || [ "${{ github.event_name }}" == "push" ]; then
+            NEW_VERSION="$NEW_VERSION-dev.${{ github.run_number }}"
+            IS_PRERELEASE=true
+          else
+            IS_PRERELEASE=false
+          fi
+
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "version_code=${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+          echo "is_prerelease=$IS_PRERELEASE" >> "$GITHUB_OUTPUT"
+          echo "Calculated version: $NEW_VERSION"
+          echo "Calculated base version: $BASE_VERSION"
+
+  build:
+    needs: calculate-version
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            platform: macos-android
+          - os: windows-latest
+            platform: windows
+          - os: ubuntu-latest
+            platform: linux
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Android SDK
+        if: matrix.platform == 'macos-android'
+        uses: android-actions/setup-android@v4
+
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Show effective version info
+        run: |
+          echo "appVersion=${{ needs.calculate-version.outputs.version }}"
+          echo "packageVersion=${{ needs.calculate-version.outputs.base_version }}"
+          echo "appVersionCode=${{ needs.calculate-version.outputs.version_code }}"
+          echo "isPrerelease=${{ needs.calculate-version.outputs.is_prerelease }}"
+
+      - name: Build Android APK
+        if: matrix.platform == 'macos-android'
+        run: >-
+          ./gradlew
+          "-PappVersion=${{ needs.calculate-version.outputs.version }}"
+          "-PpackageVersion=${{ needs.calculate-version.outputs.base_version }}"
+          "-PappVersionCode=${{ needs.calculate-version.outputs.version_code }}"
+          :androidApp:assembleRelease
+
+      - name: Build Desktop (Mac)
+        if: matrix.platform == 'macos-android'
+        run: >-
+          ./gradlew
+          "-PappVersion=${{ needs.calculate-version.outputs.version }}"
+          "-PpackageVersion=${{ needs.calculate-version.outputs.base_version }}"
+          "-PappVersionCode=${{ needs.calculate-version.outputs.version_code }}"
+          :desktopApp:packageDmg :desktopApp:packagePkg
+
+      - name: Build Desktop (Windows)
+        if: matrix.platform == 'windows'
+        run: >-
+          ./gradlew
+          "-PappVersion=${{ needs.calculate-version.outputs.version }}"
+          "-PpackageVersion=${{ needs.calculate-version.outputs.base_version }}"
+          "-PappVersionCode=${{ needs.calculate-version.outputs.version_code }}"
+          :desktopApp:packageMsi :desktopApp:packageExe
+
+      - name: Build Desktop (Linux)
+        if: matrix.platform == 'linux'
+        run: >-
+          ./gradlew
+          "-PappVersion=${{ needs.calculate-version.outputs.version }}"
+          "-PpackageVersion=${{ needs.calculate-version.outputs.base_version }}"
+          "-PappVersionCode=${{ needs.calculate-version.outputs.version_code }}"
+          :desktopApp:packageDeb :desktopApp:packageRpm :desktopApp:packageAppImage
+
+      - name: Upload Artifacts (macOS & Android)
+        if: matrix.platform == 'macos-android'
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.platform }}
+          path: |
+            androidApp/build/outputs/apk/release/*.apk
+            desktopApp/build/compose/binaries/main/dmg/*.dmg
+            desktopApp/build/compose/binaries/main/pkg/*.pkg
+          if-no-files-found: error
+
+      - name: Upload Artifacts (Windows)
+        if: matrix.platform == 'windows'
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.platform }}
+          path: |
+            desktopApp/build/compose/binaries/main/msi/*.msi
+            desktopApp/build/compose/binaries/main/exe/*.exe
+          if-no-files-found: error
+
+      - name: Upload Artifacts (Linux)
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.platform }}
+          path: |
+            desktopApp/build/compose/binaries/main/deb/*.deb
+            desktopApp/build/compose/binaries/main/rpm/*.rpm
+            desktopApp/build/compose/binaries/main/appimage/*.AppImage
+          if-no-files-found: error
+
+  publish:
+    needs: [calculate-version, build]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Prepare release assets
+        run: |
+          set -euo pipefail
+          mkdir -p release-assets
+
+          # Copy only final distributable artifacts from any downloaded path layout.
+          find artifacts -type f \( \
+            -name '*.apk' -o \
+            -name '*.dmg' -o \
+            -name '*.pkg' -o \
+            -name '*.msi' -o \
+            -name '*.exe' -o \
+            -name '*.deb' -o \
+            -name '*.rpm' -o \
+            -name '*.AppImage' -o \
+            -name '*.appimage' \
+          \) -exec cp '{}' release-assets/ \;
+
+          ls -lah release-assets
+          test -n "$(ls -A release-assets)"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: v${{ needs.calculate-version.outputs.version }}
+          name: ${{ needs.calculate-version.outputs.is_prerelease == 'true' && 'Dev Build ' || '' }}v${{ needs.calculate-version.outputs.version }}
+          prerelease: ${{ needs.calculate-version.outputs.is_prerelease == 'true' }}
+          generate_release_notes: true
+          files: release-assets/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
