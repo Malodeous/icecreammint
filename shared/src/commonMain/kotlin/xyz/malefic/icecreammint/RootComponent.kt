@@ -20,8 +20,11 @@ interface RootComponent {
     fun navigateTo(screen: Screen)
 
     @Serializable
-    enum class Screen(val title: String, val icon: ImageVector) {
-        Home("Home", Octicons.Home24),
+    enum class Screen(
+        val title: String,
+        val icon: ImageVector,
+    ) {
+        Home("Ice Cream Mint", Octicons.Home24),
         Demo("Demo", Octicons.Beaker24),
     }
 }

@@ -18,6 +18,7 @@ compose-components-resources = { group = "org.jetbrains.compose.components", nam
 decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 souza-octicons = { group = "br.com.devsrsouza.compose.icons", name = "octicons", version.ref = "octicons" }
+kermit = { group = "co.touchlab", name = "kermit", version = "2.1.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

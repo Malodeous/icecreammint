@@ -65,6 +65,8 @@ kotlin {
 
             implementation(libs.souza.octicons)
 
+            implementation(libs.kermit)
+
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose)
         }

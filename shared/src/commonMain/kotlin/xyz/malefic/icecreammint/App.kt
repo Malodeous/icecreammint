@@ -43,7 +43,9 @@ fun App(
                 },
                 actions = {
                     component.topLevelScreens.forEach { screen ->
-                        TextButton(onClick = { component.navigateTo(screen) }) {
+                        TextButton(onClick = {
+                            component.navigateTo(screen)
+                        }) {
                             Icon(screen.icon, screen.title)
                         }
                     }
