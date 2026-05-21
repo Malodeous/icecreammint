@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,7 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import xyz.malefic.icecreammint.screens.DemoScreen
-import xyz.malefic.icecreammint.screens.HomeScreen
+import xyz.malefic.icecreammint.screens.EmptyScreenContent
+import xyz.malefic.icecreammint.screens.SettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +40,7 @@ fun App(
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             TopAppBar(
                 title = {
-                    Text(activeScreen.title)
+                    Text("Home")
                 },
                 actions = {
                     component.topLevelScreens.forEach { screen ->
@@ -52,8 +54,9 @@ fun App(
             )
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 when (activeScreen) {
-                    RootComponent.Screen.Home -> HomeScreen()
-                    RootComponent.Screen.Demo -> DemoScreen()
+                    RootComponent.Screen.Home -> EmptyScreenContent(Modifier.fillMaxWidth())
+                    RootComponent.Screen.Demo -> DemoScreen(Modifier.fillMaxWidth())
+                    RootComponent.Screen.Settings -> SettingsScreen()
                 }
             }
         }

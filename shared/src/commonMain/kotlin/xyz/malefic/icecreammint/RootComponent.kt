@@ -9,8 +9,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import compose.icons.Octicons
 import compose.icons.octicons.Beaker24
+import compose.icons.octicons.Gear24
 import compose.icons.octicons.Home24
 import kotlinx.serialization.Serializable
+
+// Navigation
 
 interface RootComponent {
     val stack: Value<ChildStack<*, Screen>>
@@ -24,8 +27,9 @@ interface RootComponent {
         val title: String,
         val icon: ImageVector,
     ) {
-        Home("Ice Cream Mint", Octicons.Home24),
+        Home("Home", Octicons.Home24),
         Demo("Demo", Octicons.Beaker24),
+        Settings("Settings", Octicons.Gear24),
     }
 }
 
@@ -48,6 +52,7 @@ class DefaultRootComponent(
         listOf(
             RootComponent.Screen.Home,
             RootComponent.Screen.Demo,
+            RootComponent.Screen.Settings,
         )
 
     private fun screenFactory(
