@@ -3,6 +3,7 @@ package xyz.malefic.icecreammint.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -17,13 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DemoScreen(modifier: Modifier = Modifier) {
+fun DemoScreen() {
     var name by remember { mutableStateOf("") }
     var greetedName by remember { mutableStateOf<String?>(null) }
     var counter by remember { mutableStateOf(0) }
 
     Column(
-        modifier.padding(16.dp),
+        Modifier.fillMaxSize().padding(16.dp),
         Arrangement.spacedBy(12.dp),
         Alignment.CenterHorizontally,
     ) {
