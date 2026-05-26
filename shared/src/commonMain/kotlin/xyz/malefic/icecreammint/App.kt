@@ -39,7 +39,7 @@ fun App(
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             TopAppBar(
                 title = {
-                    Text("Home")
+                    Text("Ice Cream Mint")
                 },
                 actions = {
                     component.topLevelScreens.forEach { screen ->

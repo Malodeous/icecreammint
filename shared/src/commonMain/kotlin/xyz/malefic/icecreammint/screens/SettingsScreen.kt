@@ -16,11 +16,11 @@ fun SettingsScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
     )
         {
             Text("General")
-            Text("General")
+            Text("Accessibility")
             Text("General")
             Text("General")
             Text("General")
