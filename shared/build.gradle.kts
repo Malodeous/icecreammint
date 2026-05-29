@@ -67,6 +67,8 @@ kotlin {
 
             implementation(libs.kermit)
 
+            implementation(libs.coil)
+
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose)
         }
