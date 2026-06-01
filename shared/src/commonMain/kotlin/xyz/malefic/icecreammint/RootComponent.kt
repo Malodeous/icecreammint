@@ -50,7 +50,6 @@ class DefaultRootComponent(
 
     override val topLevelScreens: List<RootComponent.Screen> =
         listOf(
-            RootComponent.Screen.Home,
             RootComponent.Screen.Demo,
             RootComponent.Screen.Settings,
         )

@@ -24,8 +24,8 @@ fun DemoScreen() {
     var counter by remember { mutableStateOf(0) }
 
     Column(
-        Modifier.fillMaxSize().padding(16.dp),
-        Arrangement.spacedBy(12.dp),
+        Modifier.fillMaxSize().padding(top = 64.dp),
+        Arrangement.spacedBy(24.dp),
         Alignment.CenterHorizontally,
     ) {
         TextField(

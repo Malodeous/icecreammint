@@ -20,8 +20,8 @@ fun HomeScreen() {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
+        {
+            Text("Welcome!", modifier = Modifier.padding(24.dp), fontSize = 30.sp, fontFamily = FontFamily.Serif)
+        },
     )
-    {
-        Text("Welcome to Ice Cream Mint!", modifier = Modifier.padding(16.dp), fontSize = 30.sp, fontFamily = FontFamily.Serif)
-    }
 }

@@ -1,18 +1,21 @@
 package xyz.malefic.icecreammint
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -21,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import xyz.malefic.icecreammint.screens.DemoScreen
 import xyz.malefic.icecreammint.screens.HomeScreen
@@ -55,30 +60,49 @@ fun App(
         colorScheme = appColorScheme,
     ) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            TopAppBar(
-                title = {
-                    Text("Ice Cream Mint", color = MaterialTheme.colorScheme.onBackground, fontFamily = FontFamily.Serif)
-                },
-                actions = {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .background(appColorScheme.primary)
+                    .border(width = 2.dp, color = appColorScheme.onPrimary),
+            )
+            {
+                Text(
+                    "Ice Cream Mint",
+                    modifier = Modifier.align(Alignment.TopCenter).padding(all = 12.dp),
+                    fontSize = 20.sp,
+                    color = appColorScheme.onPrimary,
+                    fontFamily = FontFamily.Serif,
+                )
+                RootComponent.Screen.Home
+                TextButton(modifier = Modifier.align(Alignment.TopStart), onClick = {
+                    component.navigateTo(RootComponent.Screen.Home)
+                }) {
+                    Icon(
+                        RootComponent.Screen.Home.icon,
+                        RootComponent.Screen.Home.title,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
+                Row(modifier = Modifier.align(Alignment.TopEnd)) {
                     component.topLevelScreens.forEach { screen ->
                         TextButton(onClick = {
                             component.navigateTo(screen)
                         }) {
-                            Icon(screen.icon, screen.title, tint = MaterialTheme.colorScheme.onBackground)
+                            Icon(
+                                screen.icon,
+                                screen.title,
+                                tint = MaterialTheme.colorScheme.onBackground,
+                            )
                         }
                     }
-                },
-                colors =
-                    TopAppBarColors(
-                        containerColor = appColorScheme.primary,
-                        titleContentColor = appColorScheme.onPrimary,
-                        actionIconContentColor = appColorScheme.onPrimary,
-                        scrolledContainerColor = appColorScheme.primary,
-                        navigationIconContentColor = appColorScheme.onPrimary,
-                        subtitleContentColor = appColorScheme.onPrimary,
-                    ),
-            )
-            Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
+                }
+            }
+            Box(
+                Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center,
+            ) {
                 when (activeScreen) {
                     RootComponent.Screen.Home -> HomeScreen()
                     RootComponent.Screen.Demo -> DemoScreen()
