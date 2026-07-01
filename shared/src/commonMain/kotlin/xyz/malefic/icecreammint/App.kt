@@ -5,12 +5,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +22,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -85,19 +90,7 @@ fun App(
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
-                Row(modifier = Modifier.align(Alignment.TopEnd)) {
-                    component.topLevelScreens.forEach { screen ->
-                        TextButton(onClick = {
-                            component.navigateTo(screen)
-                        }) {
-                            Icon(
-                                screen.icon,
-                                screen.title,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        }
-                    }
-                }
+                SimpleDropdownMenu(component, Modifier.align(Alignment.TopEnd))
             }
             Box(
                 Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
@@ -108,6 +101,39 @@ fun App(
                     RootComponent.Screen.Demo -> DemoScreen()
                     RootComponent.Screen.Settings -> SettingsScreen()
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun SimpleDropdownMenu(
+    component: RootComponent,
+    modifier: Modifier,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedPages by remember { mutableStateOf("Home") }
+    val pages = listOf("Demo", "Settings")
+    Box(modifier) {
+        Button(onClick = { expanded = true }) {
+            Text(selectedPages)
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            pages.forEach { page ->
+                DropdownMenuItem(
+                    text = { Text(page) },
+                    onClick = {
+                        selectedPages = page
+                        expanded = false
+                        when (page) {
+                            "Demo" -> component.navigateTo(RootComponent.Screen.Demo)
+                            "Settings" -> component.navigateTo(RootComponent.Screen.Settings)
+                        }
+                    },
+                )
             }
         }
     }
