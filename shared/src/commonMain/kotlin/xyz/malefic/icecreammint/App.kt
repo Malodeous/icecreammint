@@ -113,9 +113,14 @@ fun SimpleDropdownMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedPages by remember { mutableStateOf("Home") }
-    val pages = listOf("Demo", "Settings")
-    Box(modifier) {
-        Button(onClick = { expanded = true }) {
+    val pages = listOf("Home", "Demo", "Settings")
+    Box(
+        modifier.background(MaterialTheme.colorScheme.primary),
+    ) {
+        Button(
+            onClick = { expanded = true },
+            modifier.background(MaterialTheme.colorScheme.primary),
+        ) {
             Text(selectedPages)
         }
         DropdownMenu(
@@ -124,13 +129,20 @@ fun SimpleDropdownMenu(
         ) {
             pages.forEach { page ->
                 DropdownMenuItem(
-                    text = { Text(page) },
+                    text = {
+                        Icon(
+                            RootComponent.Screen.valueOf(page).icon,
+                            RootComponent.Screen.valueOf(page).title,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    },
                     onClick = {
                         selectedPages = page
                         expanded = false
                         when (page) {
                             "Demo" -> component.navigateTo(RootComponent.Screen.Demo)
                             "Settings" -> component.navigateTo(RootComponent.Screen.Settings)
+                            "Home" -> component.navigateTo(RootComponent.Screen.Home)
                         }
                     },
                 )
