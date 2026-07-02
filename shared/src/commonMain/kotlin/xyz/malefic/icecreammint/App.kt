@@ -21,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,9 @@ fun App(
     val childStack by component.stack.subscribeAsState()
     val activeScreen = childStack.active.instance
 
+    LaunchedEffect(activeScreen) {
+        println("activeScreen changed: $activeScreen")
+    }
     val appColorScheme =
         colorScheme
             ?: if (isSystemInDarkTheme()) {
@@ -80,7 +84,6 @@ fun App(
                     color = appColorScheme.onPrimary,
                     fontFamily = FontFamily.Serif,
                 )
-                RootComponent.Screen.Home
                 TextButton(modifier = Modifier.align(Alignment.TopStart), onClick = {
                     component.navigateTo(RootComponent.Screen.Home)
                 }) {
@@ -137,13 +140,10 @@ fun SimpleDropdownMenu(
                         )
                     },
                     onClick = {
+                        val screen = RootComponent.Screen.valueOf(page)
+                        component.navigateTo(screen)
                         selectedPages = page
                         expanded = false
-                        when (page) {
-                            "Demo" -> component.navigateTo(RootComponent.Screen.Demo)
-                            "Settings" -> component.navigateTo(RootComponent.Screen.Settings)
-                            "Home" -> component.navigateTo(RootComponent.Screen.Home)
-                        }
                     },
                 )
             }

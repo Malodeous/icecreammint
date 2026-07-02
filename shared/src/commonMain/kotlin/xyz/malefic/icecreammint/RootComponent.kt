@@ -60,5 +60,8 @@ class DefaultRootComponent(
         @Suppress("UNUSED_PARAMETER") componentContext: ComponentContext,
     ): RootComponent.Screen = screen
 
-    override fun navigateTo(screen: RootComponent.Screen) = navigation.bringToFront(screen)
+    override fun navigateTo(screen: RootComponent.Screen) {
+        println("navigateTo called: $screen")
+        navigation.bringToFront(screen)
+    }
 }
