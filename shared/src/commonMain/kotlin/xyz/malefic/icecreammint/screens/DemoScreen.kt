@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -31,24 +32,37 @@ fun DemoScreen() {
         TextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Your name") },
+            label = { Text("Your name", style = MaterialTheme.typography.labelMedium) },
+            textStyle = MaterialTheme.typography.bodyLarge,
         )
 
         Button(onClick = { greetedName = name.ifBlank { null } }) {
-            Text("Greet")
+            Text("Greet", style = MaterialTheme.typography.labelLarge)
         }
 
         greetedName?.let {
-            Text("Hello, $it!")
+            Text(
+                "Hello, $it!",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.secondary,
+            )
         }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text("Counter: $counter")
-            Button(onClick = { counter-- }) { Text("-") }
-            Button(onClick = { counter++ }) { Text("+") }
+            Text(
+                "Counter: $counter",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Button(onClick = { counter-- }) {
+                Text("-", style = MaterialTheme.typography.titleMedium)
+            }
+            Button(onClick = { counter++ }) {
+                Text("+", style = MaterialTheme.typography.titleMedium)
+            }
         }
     }
 }

@@ -5,21 +5,21 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,16 +28,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import xyz.malefic.icecreammint.screens.DemoScreen
 import xyz.malefic.icecreammint.screens.HomeScreen
 import xyz.malefic.icecreammint.screens.SettingsScreen
+import xyz.malefic.icecreammint.theme.GlobalColor
+import xyz.malefic.icecreammint.theme.GlobalText
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     component: RootComponent,
@@ -45,44 +44,27 @@ fun App(
 ) {
     val childStack by component.stack.subscribeAsState()
     val activeScreen = childStack.active.instance
+    val colors = colorScheme ?: if (isSystemInDarkTheme()) GlobalColor.darkScheme else GlobalColor.lightScheme
 
     LaunchedEffect(activeScreen) {
         println("activeScreen changed: $activeScreen")
     }
-    val appColorScheme =
-        colorScheme
-            ?: if (isSystemInDarkTheme()) {
-                darkColorScheme(
-                    background = Color(214, 189, 255, 50),
-                    primary = Color(214, 189, 255, 90),
-                    onBackground = Color(0, 0, 0, 255),
-                )
-            } else {
-                lightColorScheme(
-                    background = Color(178, 131, 255, 50),
-                    primary = Color(178, 131, 255, 90),
-                    onBackground = Color(0, 0, 0, 255),
-                )
-            }
 
-    MaterialTheme(
-        colorScheme = appColorScheme,
-    ) {
+    MaterialTheme(colorScheme = colors, typography = GlobalText.typography) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)
-                    .background(appColorScheme.primary)
-                    .border(width = 2.dp, color = appColorScheme.onPrimary),
+                    .background(MaterialTheme.colorScheme.primary)
+                    .border(width = 2.dp, color = MaterialTheme.colorScheme.onPrimary),
             )
             {
                 Text(
                     "Ice Cream Mint",
-                    modifier = Modifier.align(Alignment.TopCenter).padding(all = 12.dp),
-                    fontSize = 20.sp,
-                    color = appColorScheme.onPrimary,
-                    fontFamily = FontFamily.Serif,
+                    Modifier.align(Alignment.TopCenter).padding(all = 12.dp),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleLarge
                 )
                 TextButton(modifier = Modifier.align(Alignment.TopStart), onClick = {
                     component.navigateTo(RootComponent.Screen.Home)
@@ -90,7 +72,7 @@ fun App(
                     Icon(
                         RootComponent.Screen.Home.icon,
                         RootComponent.Screen.Home.title,
-                        tint = MaterialTheme.colorScheme.onBackground,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
                 SimpleDropdownMenu(component, Modifier.align(Alignment.TopEnd))
@@ -115,36 +97,45 @@ fun SimpleDropdownMenu(
     modifier: Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedPages by remember { mutableStateOf("Home") }
-    val pages = listOf("Home", "Demo", "Settings")
-    Box(
-        modifier.background(MaterialTheme.colorScheme.primary),
-    ) {
+    var selectedPage by remember { mutableStateOf("Home") }
+    Box(modifier) {
         Button(
             onClick = { expanded = true },
-            modifier.background(MaterialTheme.colorScheme.primary),
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
         ) {
-            Text(selectedPages)
+            Text(selectedPage, style = MaterialTheme.typography.labelLarge)
         }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
-            pages.forEach { page ->
+            component.topLevelScreens.forEach { page ->
                 DropdownMenuItem(
                     text = {
-                        Icon(
-                            RootComponent.Screen.valueOf(page).icon,
-                            RootComponent.Screen.valueOf(page).title,
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                page.icon,
+                                page.title,
+                                Modifier.padding(end = 8.dp),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                            Text(page.title, style = MaterialTheme.typography.bodyMedium)
+                        }
                     },
                     onClick = {
-                        val screen = RootComponent.Screen.valueOf(page)
-                        component.navigateTo(screen)
-                        selectedPages = page
+                        component.navigateTo(page)
+                        selectedPage = page.title
                         expanded = false
                     },
+                    colors = MenuDefaults.itemColors(
+                        textColor = MaterialTheme.colorScheme.onSurface,
+                        leadingIconColor = MaterialTheme.colorScheme.primary
+                    )
                 )
             }
         }
