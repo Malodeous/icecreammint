@@ -7,11 +7,11 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
-import compose.icons.Octicons
-import compose.icons.octicons.Beaker24
-import compose.icons.octicons.Gear24
-import compose.icons.octicons.Home24
 import kotlinx.serialization.Serializable
+import xyz.malefic.icecreammint.theme.Icons.TablerHome
+import xyz.malefic.icecreammint.theme.Icons.TablerList
+import xyz.malefic.icecreammint.theme.Icons.TablerPencil
+import xyz.malefic.icecreammint.theme.Icons.TablerSettings
 
 // Navigation
 
@@ -27,9 +27,10 @@ interface RootComponent {
         val title: String,
         val icon: ImageVector,
     ) {
-        Home("Home", Octicons.Home24),
-        Demo("Demo", Octicons.Beaker24),
-        Settings("Settings", Octicons.Gear24),
+        Home("Home", TablerHome),
+        Demo("Demo", TablerPencil),
+        Settings("Settings", TablerSettings),
+        ToDo("To-Do", TablerList),
     }
 }
 
@@ -53,6 +54,7 @@ class DefaultRootComponent(
             RootComponent.Screen.Home,
             RootComponent.Screen.Demo,
             RootComponent.Screen.Settings,
+            RootComponent.Screen.ToDo,
         )
 
     private fun screenFactory(

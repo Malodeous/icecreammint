@@ -63,8 +63,6 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.compose)
 
-            implementation(libs.souza.octicons)
-
             implementation(libs.kermit)
 
             implementation(libs.coil)
