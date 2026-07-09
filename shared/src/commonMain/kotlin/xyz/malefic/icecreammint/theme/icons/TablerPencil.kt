@@ -1,4 +1,4 @@
-package xyz.malefic.icecreammint.theme.Icons
+package xyz.malefic.icecreammint.theme.icons
 /*
 MIT License
 
@@ -22,7 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
@@ -31,14 +30,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val TablerSettings: ImageVector
+val TablerPencil: ImageVector
     get() {
-        if (_TablerSettings != null) return _TablerSettings!!
+        if (_TablerPencil != null) return _TablerPencil!!
 
-        _TablerSettings =
+        _TablerPencil =
             ImageVector
                 .Builder(
-                    name = "settings",
+                    name = "pencil",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -51,23 +50,12 @@ val TablerSettings: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(10.325f, 4.317f)
-                        curveToRelative(0.426f, -1.756f, 2.924f, -1.756f, 3.35f, 0f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, 2.573f, 1.066f)
-                        curveToRelative(1.543f, -0.94f, 3.31f, 0.826f, 2.37f, 2.37f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, 1.065f, 2.572f)
-                        curveToRelative(1.756f, 0.426f, 1.756f, 2.924f, 0f, 3.35f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, -1.066f, 2.573f)
-                        curveToRelative(0.94f, 1.543f, -0.826f, 3.31f, -2.37f, 2.37f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, -2.572f, 1.065f)
-                        curveToRelative(-0.426f, 1.756f, -2.924f, 1.756f, -3.35f, 0f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, -2.573f, -1.066f)
-                        curveToRelative(-1.543f, 0.94f, -3.31f, -0.826f, -2.37f, -2.37f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, -1.065f, -2.572f)
-                        curveToRelative(-1.756f, -0.426f, -1.756f, -2.924f, 0f, -3.35f)
-                        arcToRelative(1.724f, 1.724f, 0f, false, false, 1.066f, -2.573f)
-                        curveToRelative(-0.94f, -1.543f, 0.826f, -3.31f, 2.37f, -2.37f)
-                        curveToRelative(1f, 0.608f, 2.296f, 0.07f, 2.572f, -1.065f)
+                        moveTo(4f, 20f)
+                        horizontalLineToRelative(4f)
+                        lineToRelative(10.5f, -10.5f)
+                        arcToRelative(2.828f, 2.828f, 0f, true, false, -4f, -4f)
+                        lineToRelative(-10.5f, 10.5f)
+                        verticalLineToRelative(4f)
                     }
                     path(
                         fill = SolidColor(Color.Transparent),
@@ -76,13 +64,12 @@ val TablerSettings: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(9f, 12f)
-                        arcToRelative(3f, 3f, 0f, true, false, 6f, 0f)
-                        arcToRelative(3f, 3f, 0f, false, false, -6f, 0f)
+                        moveTo(13.5f, 6.5f)
+                        lineToRelative(4f, 4f)
                     }
                 }.build()
 
-        return _TablerSettings!!
+        return _TablerPencil!!
     }
 
-private var _TablerSettings: ImageVector? = null
+private var _TablerPencil: ImageVector? = null

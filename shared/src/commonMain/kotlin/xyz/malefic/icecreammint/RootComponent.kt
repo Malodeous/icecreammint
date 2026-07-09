@@ -8,10 +8,10 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
-import xyz.malefic.icecreammint.theme.Icons.TablerHome
-import xyz.malefic.icecreammint.theme.Icons.TablerList
-import xyz.malefic.icecreammint.theme.Icons.TablerPencil
-import xyz.malefic.icecreammint.theme.Icons.TablerSettings
+import xyz.malefic.icecreammint.theme.icons.TablerHome
+import xyz.malefic.icecreammint.theme.icons.TablerList
+import xyz.malefic.icecreammint.theme.icons.TablerPencil
+import xyz.malefic.icecreammint.theme.icons.TablerSettings
 
 // Navigation
 

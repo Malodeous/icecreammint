@@ -18,8 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +34,7 @@ import xyz.malefic.icecreammint.screens.DemoScreen
 import xyz.malefic.icecreammint.screens.HomeScreen
 import xyz.malefic.icecreammint.screens.SettingsScreen
 import xyz.malefic.icecreammint.screens.ToDoScreen
+import xyz.malefic.icecreammint.theme.GlobalColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,21 +51,14 @@ fun App(
     val appColorScheme =
         colorScheme
             ?: if (isSystemInDarkTheme()) {
-                darkColorScheme(
-                    background = Color(214, 189, 255, 50),
-                    primary = Color(214, 189, 255, 90),
-                    onBackground = Color(0, 0, 0, 255),
-                )
+                GlobalColor.darkScheme
             } else {
-                lightColorScheme(
-                    background = Color(178, 131, 255, 50),
-                    primary = Color(178, 131, 255, 90),
-                    onBackground = Color(0, 0, 0, 255),
-                )
+                GlobalColor.lightScheme
             }
 
     MaterialTheme(
         colorScheme = appColorScheme,
+        typography = MaterialTheme.typography,
     ) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(

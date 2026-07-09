@@ -1,4 +1,4 @@
-package xyz.malefic.icecreammint.theme.Icons
+package xyz.malefic.icecreammint.theme.icons
 /*
 MIT License
 
@@ -30,14 +30,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val TablerPencil: ImageVector
+val TablerHome: ImageVector
     get() {
-        if (_TablerPencil != null) return _TablerPencil!!
+        if (_TablerHome != null) return _TablerHome!!
 
-        _TablerPencil =
+        _TablerHome =
             ImageVector
                 .Builder(
-                    name = "pencil",
+                    name = "home",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -50,12 +50,11 @@ val TablerPencil: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(4f, 20f)
-                        horizontalLineToRelative(4f)
-                        lineToRelative(10.5f, -10.5f)
-                        arcToRelative(2.828f, 2.828f, 0f, true, false, -4f, -4f)
-                        lineToRelative(-10.5f, 10.5f)
-                        verticalLineToRelative(4f)
+                        moveTo(5f, 12f)
+                        lineToRelative(-2f, 0f)
+                        lineToRelative(9f, -9f)
+                        lineToRelative(9f, 9f)
+                        lineToRelative(-2f, 0f)
                     }
                     path(
                         fill = SolidColor(Color.Transparent),
@@ -64,12 +63,30 @@ val TablerPencil: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(13.5f, 6.5f)
-                        lineToRelative(4f, 4f)
+                        moveTo(5f, 12f)
+                        verticalLineToRelative(7f)
+                        arcToRelative(2f, 2f, 0f, false, false, 2f, 2f)
+                        horizontalLineToRelative(10f)
+                        arcToRelative(2f, 2f, 0f, false, false, 2f, -2f)
+                        verticalLineToRelative(-7f)
+                    }
+                    path(
+                        fill = SolidColor(Color.Transparent),
+                        stroke = SolidColor(Color.Black),
+                        strokeLineWidth = 2f,
+                        strokeLineCap = StrokeCap.Round,
+                        strokeLineJoin = StrokeJoin.Round,
+                    ) {
+                        moveTo(9f, 21f)
+                        verticalLineToRelative(-6f)
+                        arcToRelative(2f, 2f, 0f, false, true, 2f, -2f)
+                        horizontalLineToRelative(2f)
+                        arcToRelative(2f, 2f, 0f, false, true, 2f, 2f)
+                        verticalLineToRelative(6f)
                     }
                 }.build()
 
-        return _TablerPencil!!
+        return _TablerHome!!
     }
 
-private var _TablerPencil: ImageVector? = null
+private var _TablerHome: ImageVector? = null

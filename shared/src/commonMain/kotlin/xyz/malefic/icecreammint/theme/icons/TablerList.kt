@@ -1,4 +1,4 @@
-package xyz.malefic.icecreammint.theme.Icons
+package xyz.malefic.icecreammint.theme.icons
 /*
 MIT License
 
@@ -30,14 +30,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val TablerHome: ImageVector
+val TablerList: ImageVector
     get() {
-        if (_TablerHome != null) return _TablerHome!!
+        if (_TablerList != null) return _TablerList!!
 
-        _TablerHome =
+        _TablerList =
             ImageVector
                 .Builder(
-                    name = "home",
+                    name = "list",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -50,11 +50,38 @@ val TablerHome: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(5f, 12f)
-                        lineToRelative(-2f, 0f)
-                        lineToRelative(9f, -9f)
-                        lineToRelative(9f, 9f)
-                        lineToRelative(-2f, 0f)
+                        moveTo(9f, 6f)
+                        lineToRelative(11f, 0f)
+                    }
+                    path(
+                        fill = SolidColor(Color.Transparent),
+                        stroke = SolidColor(Color.Black),
+                        strokeLineWidth = 2f,
+                        strokeLineCap = StrokeCap.Round,
+                        strokeLineJoin = StrokeJoin.Round,
+                    ) {
+                        moveTo(9f, 12f)
+                        lineToRelative(11f, 0f)
+                    }
+                    path(
+                        fill = SolidColor(Color.Transparent),
+                        stroke = SolidColor(Color.Black),
+                        strokeLineWidth = 2f,
+                        strokeLineCap = StrokeCap.Round,
+                        strokeLineJoin = StrokeJoin.Round,
+                    ) {
+                        moveTo(9f, 18f)
+                        lineToRelative(11f, 0f)
+                    }
+                    path(
+                        fill = SolidColor(Color.Transparent),
+                        stroke = SolidColor(Color.Black),
+                        strokeLineWidth = 2f,
+                        strokeLineCap = StrokeCap.Round,
+                        strokeLineJoin = StrokeJoin.Round,
+                    ) {
+                        moveTo(5f, 6f)
+                        lineToRelative(0f, 0.01f)
                     }
                     path(
                         fill = SolidColor(Color.Transparent),
@@ -64,11 +91,7 @@ val TablerHome: ImageVector
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
                         moveTo(5f, 12f)
-                        verticalLineToRelative(7f)
-                        arcToRelative(2f, 2f, 0f, false, false, 2f, 2f)
-                        horizontalLineToRelative(10f)
-                        arcToRelative(2f, 2f, 0f, false, false, 2f, -2f)
-                        verticalLineToRelative(-7f)
+                        lineToRelative(0f, 0.01f)
                     }
                     path(
                         fill = SolidColor(Color.Transparent),
@@ -77,16 +100,12 @@ val TablerHome: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(9f, 21f)
-                        verticalLineToRelative(-6f)
-                        arcToRelative(2f, 2f, 0f, false, true, 2f, -2f)
-                        horizontalLineToRelative(2f)
-                        arcToRelative(2f, 2f, 0f, false, true, 2f, 2f)
-                        verticalLineToRelative(6f)
+                        moveTo(5f, 18f)
+                        lineToRelative(0f, 0.01f)
                     }
                 }.build()
 
-        return _TablerHome!!
+        return _TablerList!!
     }
 
-private var _TablerHome: ImageVector? = null
+private var _TablerList: ImageVector? = null

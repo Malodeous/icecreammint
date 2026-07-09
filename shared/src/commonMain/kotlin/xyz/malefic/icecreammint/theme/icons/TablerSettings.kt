@@ -1,4 +1,4 @@
-package xyz.malefic.icecreammint.theme.Icons
+package xyz.malefic.icecreammint.theme.icons
 /*
 MIT License
 
@@ -22,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
@@ -30,14 +31,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val TablerList: ImageVector
+val TablerSettings: ImageVector
     get() {
-        if (_TablerList != null) return _TablerList!!
+        if (_TablerSettings != null) return _TablerSettings!!
 
-        _TablerList =
+        _TablerSettings =
             ImageVector
                 .Builder(
-                    name = "list",
+                    name = "settings",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -50,8 +51,23 @@ val TablerList: ImageVector
                         strokeLineCap = StrokeCap.Round,
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
-                        moveTo(9f, 6f)
-                        lineToRelative(11f, 0f)
+                        moveTo(10.325f, 4.317f)
+                        curveToRelative(0.426f, -1.756f, 2.924f, -1.756f, 3.35f, 0f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, 2.573f, 1.066f)
+                        curveToRelative(1.543f, -0.94f, 3.31f, 0.826f, 2.37f, 2.37f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, 1.065f, 2.572f)
+                        curveToRelative(1.756f, 0.426f, 1.756f, 2.924f, 0f, 3.35f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, -1.066f, 2.573f)
+                        curveToRelative(0.94f, 1.543f, -0.826f, 3.31f, -2.37f, 2.37f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, -2.572f, 1.065f)
+                        curveToRelative(-0.426f, 1.756f, -2.924f, 1.756f, -3.35f, 0f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, -2.573f, -1.066f)
+                        curveToRelative(-1.543f, 0.94f, -3.31f, -0.826f, -2.37f, -2.37f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, -1.065f, -2.572f)
+                        curveToRelative(-1.756f, -0.426f, -1.756f, -2.924f, 0f, -3.35f)
+                        arcToRelative(1.724f, 1.724f, 0f, false, false, 1.066f, -2.573f)
+                        curveToRelative(-0.94f, -1.543f, 0.826f, -3.31f, 2.37f, -2.37f)
+                        curveToRelative(1f, 0.608f, 2.296f, 0.07f, 2.572f, -1.065f)
                     }
                     path(
                         fill = SolidColor(Color.Transparent),
@@ -61,51 +77,12 @@ val TablerList: ImageVector
                         strokeLineJoin = StrokeJoin.Round,
                     ) {
                         moveTo(9f, 12f)
-                        lineToRelative(11f, 0f)
-                    }
-                    path(
-                        fill = SolidColor(Color.Transparent),
-                        stroke = SolidColor(Color.Black),
-                        strokeLineWidth = 2f,
-                        strokeLineCap = StrokeCap.Round,
-                        strokeLineJoin = StrokeJoin.Round,
-                    ) {
-                        moveTo(9f, 18f)
-                        lineToRelative(11f, 0f)
-                    }
-                    path(
-                        fill = SolidColor(Color.Transparent),
-                        stroke = SolidColor(Color.Black),
-                        strokeLineWidth = 2f,
-                        strokeLineCap = StrokeCap.Round,
-                        strokeLineJoin = StrokeJoin.Round,
-                    ) {
-                        moveTo(5f, 6f)
-                        lineToRelative(0f, 0.01f)
-                    }
-                    path(
-                        fill = SolidColor(Color.Transparent),
-                        stroke = SolidColor(Color.Black),
-                        strokeLineWidth = 2f,
-                        strokeLineCap = StrokeCap.Round,
-                        strokeLineJoin = StrokeJoin.Round,
-                    ) {
-                        moveTo(5f, 12f)
-                        lineToRelative(0f, 0.01f)
-                    }
-                    path(
-                        fill = SolidColor(Color.Transparent),
-                        stroke = SolidColor(Color.Black),
-                        strokeLineWidth = 2f,
-                        strokeLineCap = StrokeCap.Round,
-                        strokeLineJoin = StrokeJoin.Round,
-                    ) {
-                        moveTo(5f, 18f)
-                        lineToRelative(0f, 0.01f)
+                        arcToRelative(3f, 3f, 0f, true, false, 6f, 0f)
+                        arcToRelative(3f, 3f, 0f, false, false, -6f, 0f)
                     }
                 }.build()
 
-        return _TablerList!!
+        return _TablerSettings!!
     }
 
-private var _TablerList: ImageVector? = null
+private var _TablerSettings: ImageVector? = null
