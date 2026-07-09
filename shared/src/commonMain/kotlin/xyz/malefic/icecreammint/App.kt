@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,10 +46,12 @@ fun App(
 ) {
     val childStack by component.stack.subscribeAsState()
     val activeScreen = childStack.active.instance
+    val selectedPage = remember { mutableStateOf("Home") }
 
     LaunchedEffect(activeScreen) {
         println("activeScreen changed: $activeScreen")
     }
+
     val appColorScheme =
         colorScheme
             ?: if (isSystemInDarkTheme()) {
@@ -78,6 +81,7 @@ fun App(
                     fontFamily = FontFamily.Serif,
                 )
                 TextButton(modifier = Modifier.align(Alignment.TopStart), onClick = {
+                    selectedPage.value = RootComponent.Screen.Home.title
                     component.navigateTo(RootComponent.Screen.Home)
                 }) {
                     Icon(
@@ -86,7 +90,7 @@ fun App(
                         tint = MaterialTheme.colorScheme.onBackground,
                     )
                 }
-                SimpleDropdownMenu(component, Modifier.align(Alignment.TopEnd))
+                component.SimpleDropdownMenu(selectedPage, Modifier.align(Alignment.TopEnd))
             }
             Box(
                 Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
@@ -104,12 +108,11 @@ fun App(
 }
 
 @Composable
-fun SimpleDropdownMenu(
-    component: RootComponent,
+fun RootComponent.SimpleDropdownMenu(
+    selectedPage: MutableState<String>,
     modifier: Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedPages by remember { mutableStateOf("Home") }
     val pages = listOf("Home", "Demo", "Settings", "ToDo")
     Box(
         modifier.background(MaterialTheme.colorScheme.primary),
@@ -118,7 +121,7 @@ fun SimpleDropdownMenu(
             onClick = { expanded = true },
             modifier.background(MaterialTheme.colorScheme.primary),
         ) {
-            Text(selectedPages)
+            Text(selectedPage.value)
         }
         DropdownMenu(
             expanded = expanded,
@@ -142,8 +145,8 @@ fun SimpleDropdownMenu(
                     },
                     onClick = {
                         val screen = RootComponent.Screen.valueOf(page)
-                        component.navigateTo(screen)
-                        selectedPages = page
+                        navigateTo(screen)
+                        selectedPage.value = page
                         expanded = false
                     },
                 )
