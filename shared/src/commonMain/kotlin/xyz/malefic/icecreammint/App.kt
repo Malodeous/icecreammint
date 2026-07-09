@@ -35,6 +35,7 @@ import xyz.malefic.icecreammint.screens.HomeScreen
 import xyz.malefic.icecreammint.screens.SettingsScreen
 import xyz.malefic.icecreammint.screens.ToDoScreen
 import xyz.malefic.icecreammint.theme.GlobalColor
+import xyz.malefic.icecreammint.theme.GlobalText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +59,7 @@ fun App(
 
     MaterialTheme(
         colorScheme = appColorScheme,
-        typography = MaterialTheme.typography,
+        typography = GlobalText.typography,
     ) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
