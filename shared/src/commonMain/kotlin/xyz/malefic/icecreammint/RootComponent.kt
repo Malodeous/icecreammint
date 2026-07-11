@@ -12,6 +12,7 @@ import xyz.malefic.icecreammint.theme.icons.TablerHome
 import xyz.malefic.icecreammint.theme.icons.TablerList
 import xyz.malefic.icecreammint.theme.icons.TablerPencil
 import xyz.malefic.icecreammint.theme.icons.TablerSettings
+import xyz.malefic.icecreammint.theme.icons.TablerX
 
 // Navigation
 
@@ -30,7 +31,7 @@ interface RootComponent {
         Home("Home", TablerHome),
         Demo("Demo", TablerPencil),
         Settings("Settings", TablerSettings),
-        ToDo("To-Do", TablerList),
+        ToDo("To-Do List", TablerList),
     }
 }
 

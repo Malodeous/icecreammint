@@ -113,7 +113,7 @@ fun RootComponent.SimpleDropdownMenu(
     modifier: Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val pages = listOf("Home", "Demo", "Settings", "ToDo")
+    val pages = topLevelScreens
     Box(
         modifier.background(MaterialTheme.colorScheme.primary),
     ) {
@@ -132,21 +132,20 @@ fun RootComponent.SimpleDropdownMenu(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            page,
+                            page.title,
                             color = MaterialTheme.colorScheme.onBackground,
                         )
                     },
                     leadingIcon = {
                         Icon(
-                            RootComponent.Screen.valueOf(page).icon,
-                            RootComponent.Screen.valueOf(page).title,
+                            page.icon,
+                            page.title,
                             tint = MaterialTheme.colorScheme.onBackground,
                         )
                     },
                     onClick = {
-                        val screen = RootComponent.Screen.valueOf(page)
-                        navigateTo(screen)
-                        selectedPage.value = page
+                        navigateTo(page)
+                        selectedPage.value = page.title
                         expanded = false
                     },
                 )
