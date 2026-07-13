@@ -66,6 +66,8 @@ kotlin {
 
             implementation(libs.coil)
 
+            implementation(libs.datetime)
+
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose)
         }

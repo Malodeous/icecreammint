@@ -6,6 +6,7 @@ compose-multiplatform = "1.11.1"
 decompose = "3.5.0"
 kotlin = "2.4.0"
 coil = "3.5.0"
+datetime = "0.8.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
@@ -19,6 +20,7 @@ decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref
 decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 kermit = { group = "co.touchlab", name = "kermit", version = "2.1.0" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
