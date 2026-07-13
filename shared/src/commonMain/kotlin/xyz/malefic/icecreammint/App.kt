@@ -34,7 +34,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import xyz.malefic.icecreammint.screens.DemoScreen
 import xyz.malefic.icecreammint.screens.HomeScreen
 import xyz.malefic.icecreammint.screens.SettingsScreen
-import xyz.malefic.icecreammint.screens.ToDoScreen
+import xyz.malefic.icecreammint.screens.TaskScreen
 import xyz.malefic.icecreammint.theme.GlobalColor
 import xyz.malefic.icecreammint.theme.GlobalText
 
@@ -100,7 +100,7 @@ fun App(
                     RootComponent.Screen.Home -> HomeScreen()
                     RootComponent.Screen.Demo -> DemoScreen()
                     RootComponent.Screen.Settings -> SettingsScreen()
-                    RootComponent.Screen.ToDo -> ToDoScreen()
+                    RootComponent.Screen.ToDo -> TaskScreen()
                 }
             }
         }
