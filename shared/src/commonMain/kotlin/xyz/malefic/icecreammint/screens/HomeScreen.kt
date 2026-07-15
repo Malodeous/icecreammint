@@ -1,5 +1,6 @@
 package xyz.malefic.icecreammint.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +15,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen() {
-    Column(Modifier.fillMaxSize(), Arrangement.Top, Alignment.CenterHorizontally) {
+    Column(Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background), Arrangement.Top, Alignment.CenterHorizontally) {
         Text(
             "Welcome!",
             Modifier.padding(24.dp),

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -55,8 +57,10 @@ fun App(
     val appColorScheme =
         colorScheme
             ?: if (isSystemInDarkTheme()) {
+                println("Using dark color scheme")
                 GlobalColor.darkScheme
             } else {
+                println("Using light color scheme")
                 GlobalColor.lightScheme
             }
 
@@ -69,8 +73,7 @@ fun App(
                 Modifier
                     .fillMaxWidth()
                     .height(50.dp)
-                    .background(appColorScheme.primary)
-                    .border(width = 2.dp, color = appColorScheme.onPrimary),
+                    .background(appColorScheme.primary),
             )
             {
                 Text(
@@ -80,14 +83,21 @@ fun App(
                     color = appColorScheme.onPrimary,
                     fontFamily = FontFamily.Serif,
                 )
-                TextButton(modifier = Modifier.align(Alignment.TopStart), onClick = {
-                    selectedPage.value = RootComponent.Screen.Home.title
-                    component.navigateTo(RootComponent.Screen.Home)
-                }) {
+                TextButton(
+                    modifier =
+                        Modifier.align(
+                            Alignment.TopStart,
+                        ),
+                    colors = ButtonDefaults.textButtonColors().copy(containerColor = MaterialTheme.colorScheme.primary),
+                    onClick = {
+                        selectedPage.value = RootComponent.Screen.Home.title
+                        component.navigateTo(RootComponent.Screen.Home)
+                    },
+                ) {
                     Icon(
                         RootComponent.Screen.Home.icon,
                         RootComponent.Screen.Home.title,
-                        tint = MaterialTheme.colorScheme.onBackground,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
                 component.SimpleDropdownMenu(selectedPage, Modifier.align(Alignment.TopEnd))
@@ -121,7 +131,7 @@ fun RootComponent.SimpleDropdownMenu(
             onClick = { expanded = true },
             modifier.background(MaterialTheme.colorScheme.primary),
         ) {
-            Text(selectedPage.value)
+            Text(selectedPage.value, color = MaterialTheme.colorScheme.onPrimary)
         }
         DropdownMenu(
             expanded = expanded,
@@ -133,14 +143,14 @@ fun RootComponent.SimpleDropdownMenu(
                     text = {
                         Text(
                             page.title,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.onPrimary,
                         )
                     },
                     leadingIcon = {
                         Icon(
                             page.icon,
                             page.title,
-                            tint = MaterialTheme.colorScheme.onBackground,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                         )
                     },
                     onClick = {
